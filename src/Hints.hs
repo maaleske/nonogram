@@ -5,16 +5,18 @@ import Data.List
 -- Square status
 data Square = Filled | Blank deriving (Eq)
 
+instance Show Square where
+    show Filled = "█"
+    show Blank = "·"
+
 -- List of hint integers
 type Hints = [Int]
 type Emptys = [Int]
-
 
 solvePossible :: Int -> Int -> [Hints] -> [Hints] -> [[Square]]
 solvePossible w h hhints vhints = intersect imsh imsv
     where imsh = map concat $ possibleImages w hhints
           imsv = map (concat . transpose) $ possibleImages h vhints
-
     
 possibleImages :: Int -> [Hints] -> [[[Square]]]
 possibleImages _ [] = [[]]
