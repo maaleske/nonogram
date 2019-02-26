@@ -53,9 +53,13 @@ nBlank = flip replicate Blank
 nFilled :: Int -> [Square]
 nFilled = flip replicate Filled
 
+
 divideToNats :: Int -> [[Int]]
-divideToNats 0 = [[]]
-divideToNats n = do
-    k <- [n,n-1..1]
+divideToNats = (map divideToNats' [0..] !!)
+
+divideToNats' :: Int -> [[Int]]
+divideToNats' 0 = [[]]
+divideToNats' n = do
+    k <- [1..n]
     rest <- divideToNats (n - k)
     pure $ k : rest
