@@ -28,6 +28,6 @@ benchmark bench-builder-all
   type: exitcode-stdio-1.0
   hs-source-dirs: . bench
   main-is: solveExamples.hs
-  build-depends: base, nonogram
+  build-depends: base, nonogram, time
   ghc-options: -O2
 
