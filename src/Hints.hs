@@ -37,7 +37,7 @@ possibleLinesL :: Hints -> Emptys -> [[Square]]
 possibleLinesL [] [] = [[]]
 possibleLinesL [h] [] = [nFilled h]
 possibleLinesL [] [e] = []
-possibleLinesL (h:hs) (e:es) = do 
+possibleLinesL (h:hs) (e:es) = do
     rest <- possibleLinesL hs es
     pure $ nFilled h ++ nBlank e ++ rest
 
@@ -45,7 +45,7 @@ possibleLinesR :: Hints -> Emptys -> [[Square]]
 possibleLinesR [] [] = [[]]
 possibleLinesR [h] [] = []
 possibleLinesR [] [e] = [nBlank e]
-possibleLinesR (h:hs) (e:es) = do 
+possibleLinesR (h:hs) (e:es) = do
     rest <- possibleLinesR hs es
     pure $ nBlank e ++ nFilled h ++ rest
 
@@ -55,6 +55,16 @@ nBlank = flip replicate Blank
 nFilled :: Int -> [Square]
 nFilled = flip replicate Filled
 
+divideToKNats :: Int -> Int -> [[Int]]
+divideToKNats k = (map (divideToKNats' k) [0..] !!)
+
+divideToKNats' :: Int -> Int -> [[Int]]
+divideToKNats' _ 0 = []
+divideToKNats' 1 n = [[n]]
+divideToKNats' k n = do
+    m <- [1..n]
+    rest <- divideToKNats' (k-1) (n-m)
+    pure $ m : rest
 
 divideToNats :: Int -> [[Int]]
 divideToNats = (map divideToNats' [0..] !!)
