@@ -17,11 +17,11 @@ solvePossible :: Int -> Int -> [Hints] -> [Hints] -> [[Square]]
 solvePossible w h hhints vhints = intersect imsh imsv
     where imsh = map concat $ possibleImages w hhints
           imsv = map (concat . transpose) $ possibleImages h vhints
-    
+
 possibleImages :: Int -> [Hints] -> [[[Square]]]
 possibleImages _ [] = [[]]
 possibleImages l (h:hs) = do
-    line <- possibleLines l h
+    line <- possibleLines' l h
     rest <- possibleImages l hs
     pure $ line : rest
 
@@ -30,6 +30,15 @@ possibleLines l hints =
     let allowedEmpty = (1 >=) . abs . (length hints -) . length in
     do
         emptys <- filter allowedEmpty $ divideToNats (l - sum hints)
+        lines <- possibleLinesL hints emptys ++ possibleLinesR hints emptys
+        pure lines
+
+possibleLines' :: Int -> Hints -> [[Square]]
+possibleLines' l hints = let
+    nemptys = let nh = length hints in [nh - 1, nh, nh + 1]
+    possibleEmptys = concatMap (flip divideToKNats (l - sum hints)) nemptys
+    in do
+        emptys <- possibleEmptys
         lines <- possibleLinesL hints emptys ++ possibleLinesR hints emptys
         pure lines
 
