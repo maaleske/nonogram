@@ -3,7 +3,7 @@ module Hints where
 import Data.List
 
 -- Square status
-data Square = Filled | Blank deriving (Eq)
+data Square = Filled | Blank deriving (Eq, Ord)
 
 instance Show Square where
     show Filled = "█"
