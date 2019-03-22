@@ -55,15 +55,23 @@ nBlank = flip replicate Blank
 nFilled :: Int -> [Square]
 nFilled = flip replicate Filled
 
+memo2 :: (Int -> Int -> a) -> [[a]]
+memo2 f = map (\x -> map (f x) [0..]) [0..]
+
 divideToKNats :: Int -> Int -> [[Int]]
-divideToKNats k = (map (divideToKNats' k) [0..] !!)
+divideToKNats k n = knDivisions !! k !! n
+
+knDivisions :: [[[[Int]]]]
+knDivisions = memo2 divideToKNats'
 
 divideToKNats' :: Int -> Int -> [[Int]]
+divideToKNats' 0 0 = [[]]
+divideToKNats' 0 _ = []
 divideToKNats' _ 0 = []
 divideToKNats' 1 n = [[n]]
 divideToKNats' k n = do
     m <- [1..n]
-    rest <- divideToKNats' (k-1) (n-m)
+    rest <- divideToKNats (k-1) (n-m)
     pure $ m : rest
 
 divideToNats :: Int -> [[Int]]
