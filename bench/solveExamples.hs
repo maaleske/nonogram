@@ -16,4 +16,4 @@ main = do
     putStrLn . show . fromJust $ solve square
     t3 <- getCurrentTime
     putStrLn $ "Solution took " ++ show (diffUTCTime t3 t2)
---    putStrLn . show . fromJust $ solve bunny
+    putStrLn . show . fromJust $ solve bunny
