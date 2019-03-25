@@ -20,8 +20,7 @@ possibleLines l hints =
     let allowedEmpty = (1 >=) . abs . (length hints -) . length in
     do
         emptys <- filter allowedEmpty $ divideToNats (l - sum hints)
-        lines <- possibleLinesL hints emptys ++ possibleLinesR hints emptys
-        pure lines
+        possibleLinesL hints emptys ++ possibleLinesR hints emptys
 
 possibleLinesL :: Hints -> Emptys -> [[Square]]
 possibleLinesL [] [] = [[]]

@@ -21,8 +21,7 @@ possibleLines l hints = let
     possibleEmptys = concatMap (flip divideToKNats (l - sum hints)) nemptys
     in do
         emptys <- possibleEmptys
-        lines <- possibleLinesL hints emptys ++ possibleLinesR hints emptys
-        pure lines
+        ipossibleLinesL hints emptys ++ possibleLinesR hints emptys
 
 possibleLinesL :: Hints -> Emptys -> [[Square]]
 possibleLinesL [] [] = [[]]
